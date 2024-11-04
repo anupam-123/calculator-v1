@@ -1,0 +1,13 @@
+<form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+    <div>
+      <label for="first">First Number:</label>
+      <input type="number" required formControlName="first" id="first" name="first">
+      <label for="second">Second number:</label>
+      <input type="number" required formControlName="second" id="second" name="second">
+      <input type="submit" [disabled]="!myForm.valid" value="{{operation}}">
+    </div>
+    <div >
+      <h4>{{myForm.value.result}}</h4> 
+    </div>
+  </form>
+  
