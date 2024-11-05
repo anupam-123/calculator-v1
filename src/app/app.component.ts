@@ -18,19 +18,18 @@ import { ReactiveFormsModule } from '@angular/forms';
 })
 class AppComponent {
   title: string = '';
-  constructor(private inject: ActivatedRoute){
-  }
+  constructor(private inject: ActivatedRoute){}
 
 
 }
 
-@Injectable({
-  providedIn: 'root',
-})
-class CalculatorService {
-  start() {
-    console.log('hello');
-  }
-}
+// @Injectable({
+//   providedIn: 'root',
+// })
+// class CalculatorService {
+//   start() {
+//     console.log('hello');
+//   }
+// }
 
-export { AppComponent, CalculatorService };
+export { AppComponent };
