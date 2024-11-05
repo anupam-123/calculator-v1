@@ -1,17 +1,21 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { HeaderComponent } from '../header/header.component';
 
 @Component({
   selector: 'app-home-page',
   standalone: true,
-  imports: [],
+  imports: [HeaderComponent],
   templateUrl: './home-page.component.html',
-  styleUrl: './home-page.component.css'
+  styleUrl: './home-page.component.css',
 })
-export class HomePageComponent {
-  constructor(private router: Router) { }
+export class HomePageComponent implements OnInit{
+  title: string = '';
+  constructor(private router: Router, private route: ActivatedRoute) {}
   redirectToPage(path: string) {
     this.router.navigate([path]);
   }
-
+  ngOnInit() {
+    this.title = this.route.snapshot.url[0].path;
+  }
 }

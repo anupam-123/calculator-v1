@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
-import { AddComponent } from './add/add.component';
-import { SubComponent } from './sub/sub.component';
-import { MultiplyComponent } from './multiply/multiply.component';
-import { DivisionComponent } from './division/division.component';
+import { AddComponent } from './operation/add/add.component';
+import { SubComponent } from './operation/sub/sub.component';
+import { MultiplyComponent } from './operation/multiply/multiply.component';
+import { DivisionComponent } from './operation/division/division.component';
 import { HomePageComponent } from './home-page/home-page.component';
 
 export const routes: Routes = [
@@ -21,7 +21,8 @@ export const routes: Routes = [
   {
     path: 'division',
     component: DivisionComponent,
-  },{
+  },
+  {
     path: 'home',
     component: HomePageComponent,
   },

@@ -1,5 +1,5 @@
-import { Component, Injectable } from '@angular/core';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { AfterViewInit, Component, EventEmitter, Injectable, Output } from '@angular/core';
+import { ActivatedRoute, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './header/header.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -17,7 +17,11 @@ import { ReactiveFormsModule } from '@angular/forms';
   styleUrl: './app.component.css',
 })
 class AppComponent {
-  title = 'myapp';
+  title: string = '';
+  constructor(private inject: ActivatedRoute){
+  }
+
+
 }
 
 @Injectable({
