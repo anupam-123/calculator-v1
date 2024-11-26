@@ -1,13 +1,22 @@
 <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
-    <div>
-      <label for="first">First Number:</label>
-      <input type="number" required formControlName="first" id="first" name="first">
-      <label for="second">Second number:</label>
-      <input type="number" required formControlName="second" id="second" name="second">
-      <input type="submit" [disabled]="!myForm.valid" value="{{operation}}">
-    </div>
-    <div >
-      <h4>{{myForm.value.result}}</h4> 
-    </div>
-  </form>
-  
+  <div *ngFor="let letter of uppercaseAlphabet" class="form-group">
+    <label [for]="letter">{{ letter }} = </label>
+    <input
+      type="number"
+      [id]="letter"
+      [formControlName]="letter"
+      class="form-control"
+    />
+  </div>
+  <div class="form-group custom-form">
+    <label for="result">Result: </label>
+    <input
+      type="text"
+      id="result"
+      formControlName="result"
+      class="form-control"
+      readonly
+    />
+  </div>
+  <button type="submit" class="btn btn-primary">Calculate</button>
+</form>

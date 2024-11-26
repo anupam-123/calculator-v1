@@ -1,63 +1,64 @@
-import { Component, Input } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { first } from 'rxjs';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Logger } from '../log/loggers.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-form-component',
   standalone: true,
-  imports: [FormsModule, FormComponentComponent, ReactiveFormsModule],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule],
   templateUrl: './form-component.component.html',
-  styleUrl: './form-component.component.css',
+  styleUrls: ['./form-component.component.css'],
 })
-export class FormComponentComponent {
-  myForm = new FormGroup({
-    first: new FormControl(0),
-    second: new FormControl(0),
-    result: new FormControl(0)
-  });
-
-  constructor(private logs: Logger){}
+export class FormComponentComponent implements OnInit {
+  myForm!: FormGroup;
+  uppercaseAlphabet: string[] = [];
   
-  @Input()
-  operation: string = '';
+  @Input() numberOfText = 2; 
+  @Input() operation: string = ''; 
+  
+  constructor(private logs: Logger) {}
+
+  ngOnInit() {
+    this.createForm();
+  }
+
+  createForm() {
+    const formControls: { [key: string]: FormControl } = {};
+    this.uppercaseAlphabet = Array.from({ length: this.numberOfText }, (_, i) => String.fromCharCode(65 + i));
+    
+    this.uppercaseAlphabet.forEach(letter => {
+      formControls[letter] = new FormControl(0, [Validators.required]);
+    });
+    formControls['result'] = new FormControl(0); 
+    this.myForm = new FormGroup(formControls);
+  }
+
   onSubmit() {
+    const values = this.uppercaseAlphabet.map(letter => this.myForm.get(letter)?.value || 0);
+
+    let result = 0;
     switch (this.operation) {
       case 'add':
-        if (
-          this.myForm.value.first != null &&
-          this.myForm.value.second != null
-        ) {
-          this.myForm.value.result = this.myForm.value.first + this.myForm.value.second;
-          this.logs.log(`Addition performed: `);
-        }
+        result = values.reduce((sum, val) => sum + val, 0);
+        this.logs.log(`Addition performed: ${result}`);
         break;
       case 'sub':
-        if (
-          this.myForm.value.first != null &&
-          this.myForm.value.second != null
-        ) {
-          this.myForm.value.result = this.myForm.value.first - this.myForm.value.second;
-        }
+        result = values.reduce((diff, val) => diff - val);
+        this.logs.log(`Subtraction performed: ${result}`);
         break;
       case 'multiply':
-        if (
-          this.myForm.value.first != null &&
-          this.myForm.value.second != null
-        ) {
-          this.myForm.value.result = this.myForm.value.first * this.myForm.value.second;
-        }
+        result = values.reduce((prod, val) => prod * val, 1);
+        this.logs.log(`Multiplication performed: ${result}`);
         break;
       case 'division':
-        if (
-          this.myForm.value.first != null &&
-          this.myForm.value.second != null
-        ) {
-          this.myForm.value.result = this.myForm.value.first / this.myForm.value.second;
-        }
+        result = values.reduce((quot, val) => quot / val);
+        this.logs.log(`Division performed: ${result}`);
         break;
       default:
+        this.logs.log('Invalid operation');
         break;
     }
+    this.myForm.get('result')?.setValue(result);
   }
 }

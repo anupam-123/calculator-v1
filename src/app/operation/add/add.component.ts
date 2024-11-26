@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormsModule, NgModel } from '@angular/forms';
 import { FormComponentComponent } from '../../form-component/form-component.component';
-import { CalculatorService } from '../../app.component';
+// import { CalculatorService } from '../../app.component';
 import { ActivatedRoute } from '@angular/router';
 import { HeaderComponent } from '../../header/header.component';
 
