@@ -14,7 +14,7 @@ export class FormComponentComponent implements OnInit {
   myForm!: FormGroup;
   uppercaseAlphabet: string[] = [];
   
-  @Input() numberOfText = 2; 
+  @Input() numberOfText = 3; 
   @Input() operation: string = ''; 
   
   constructor(private logs: Logger) {}
