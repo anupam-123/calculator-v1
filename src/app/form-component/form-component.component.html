@@ -1,22 +1,42 @@
-<form [formGroup]="myForm" (ngSubmit)="onSubmit()">
-  <div *ngFor="let letter of uppercaseAlphabet" class="form-group">
-    <label [for]="letter">{{ letter }} = </label>
-    <input
-      type="number"
-      [id]="letter"
-      [formControlName]="letter"
-      class="form-control"
-    />
+<div class="center-container p-2">
+  <div class="card" style="width: 18rem">
+    <form
+      [formGroup]="myForm"
+      (ngSubmit)="onSubmit()"
+      class="d-flex flex-column gap-3 p-3"
+    >
+      <div
+        *ngFor="let letter of uppercaseAlphabet"
+        class="form-group d-flex justify-content-center align-items-center gap-2"
+      >
+        <label [for]="letter">
+          <div class="d-flex gap-2">
+            <span>{{ letter }}</span>
+            <span> = </span>
+          </div>
+        </label>
+        <input
+          type="number"
+          [id]="letter"
+          [formControlName]="letter"
+          class="form-control m-2"
+          [title]="letter"
+          placeholder="Enter value for {{ letter }}"
+        />
+      </div>
+      <div
+        class="form-group custom-form d-flex justify-content-center align-items-center gap-2"
+      >
+        <label for="result">Result: </label>
+        <input
+          type="text"
+          id="result"
+          formControlName="result"
+          class="form-control"
+          readonly
+        />
+      </div>
+      <button type="submit" class="btn btn-primary">Calculate</button>
+    </form>
   </div>
-  <div class="form-group custom-form">
-    <label for="result">Result: </label>
-    <input
-      type="text"
-      id="result"
-      formControlName="result"
-      class="form-control"
-      readonly
-    />
-  </div>
-  <button type="submit" class="btn btn-primary">Calculate</button>
-</form>
+</div>
