@@ -16,7 +16,7 @@ export class AuthGuard implements CanActivate {
   async canActivate(): Promise<boolean> {
     const isAuthenticated = await this.oktaAuth.authState$
       .toPromise()
-      .then((authState) => authState.isAuthenticated);
+      .then((authState: any) => authState.isAuthenticated);
     if (isAuthenticated) {
       return true;
     } else {

@@ -6,13 +6,15 @@ import { MultiplyComponent } from './operation/multiply/multiply.component';
 import { DivisionComponent } from './operation/division/division.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { AuthGuard } from './auth.guard';
+import { LoginComponent } from './auth/login/login.component';
 
 export const routes: Routes = [
-  { path: 'callback', component: OktaCallbackComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: LoginComponent },
   { path: 'home', component: HomePageComponent },
-  { path: 'add', component: AddComponent, canActivate: [AuthGuard] },
-  { path: 'sub', component: SubComponent, canActivate: [AuthGuard] },
-  { path: 'multiply', component: MultiplyComponent, canActivate: [AuthGuard] },
-  { path: 'division', component: DivisionComponent, canActivate: [AuthGuard] },
+  { path: 'add', component: AddComponent },
+  { path: 'sub', component: SubComponent },
+  { path: 'multiply', component: MultiplyComponent },
+  { path: 'division', component: DivisionComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
 ];

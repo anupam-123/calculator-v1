@@ -1,16 +1,18 @@
-// src/main.ts
-import { bootstrapApplication, BrowserModule } from '@angular/platform-browser';
-import { importProvidersFrom } from '@angular/core';
-import { provideRouter } from '@angular/router';
-import { OktaAuthModule, OKTA_CONFIG } from '@okta/okta-angular';
-import { oktaConfig } from './okta.config';
+import { bootstrapApplication } from '@angular/platform-browser';
+import { provideAuth0 } from '@auth0/auth0-angular';
 import { AppComponent } from './app/app.component';
+import { provideRouter } from '@angular/router';
 import { routes } from './app/app.routes';
 
 bootstrapApplication(AppComponent, {
   providers: [
-    importProvidersFrom(BrowserModule, OktaAuthModule),
     provideRouter(routes),
-    { provide: OKTA_CONFIG, useValue: oktaConfig },
-  ],
-}).catch((err) => console.error(err));
+    provideAuth0({
+      domain: 'dev-rvo8gsyhnh0cx2gg.us.auth0.com',
+      clientId: '0TbekASBGhvLOcaLLmJeJ6GSE4onzM4s',
+      authorizationParams: {
+        redirect_uri: window.location.origin
+      }
+    }),
+  ]
+});

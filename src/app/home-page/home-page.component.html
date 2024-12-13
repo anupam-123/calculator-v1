@@ -1,5 +1,7 @@
 <div class="container vh-100 d-flex align-items-center justify-content-center">
-  <div class="card custon-design-card h-auto d-flex align-items-center justify-content-center p-5 w-25">
+  <div
+    class="d-flex gap-5 card custon-design-card h-auto d-flex align-items-center justify-content-center p-5 w-25"
+  >
     <div class="card-title">
       <h1 class="p-0">Calculator</h1>
     </div>
@@ -20,6 +22,11 @@
           Division
         </button>
       </div>
+    </div>
+    <div class="w-100 d-flex justify-content-start mt-0 ms-5">
+      <button type="button" class="btn btn-primary" (click)="logout()">
+        Logout
+      </button>
     </div>
   </div>
 </div>

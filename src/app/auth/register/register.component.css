@@ -1,0 +1,67 @@
+/* Center the register container in the middle of the screen */
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f2f5;
+  margin: 0;
+}
+
+/* Style the register card */
+.register-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  box-sizing: border-box;
+}
+
+/* Style the form group */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+/* Style the form labels */
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+/* Style the form controls */
+.form-control {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 1rem;
+}
+
+/* Style the submit button */
+.btn {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #007bff;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Change button color on hover */
+.btn:hover {
+  background-color: #0056b3;
+}
+
+/* Style the heading */
+h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #333;
+}

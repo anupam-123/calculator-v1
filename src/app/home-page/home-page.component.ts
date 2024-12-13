@@ -1,21 +1,36 @@
-import { Component, OnInit } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { HeaderComponent } from '../header/header.component';
+import { AuthService } from '@auth0/auth0-angular';
 
 @Component({
   selector: 'app-home-page',
   standalone: true,
-  imports: [HeaderComponent],
+  imports: [],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.css',
 })
-export class HomePageComponent implements OnInit{
+export class HomePageComponent implements OnInit {
+  constructor(
+    @Inject(DOCUMENT) public document: Document,
+    private auth: AuthService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
   title: string = '';
-  constructor(private router: Router, private route: ActivatedRoute) {}
   redirectToPage(path: string) {
     this.router.navigate([path]);
   }
   ngOnInit() {
     this.title = this.route.snapshot.url[0].path;
+  }
+  logout() {
+    {
+      this.auth.logout({
+        logoutParams: {
+          returnTo: this.document.location.origin,
+        },
+      });
+    }
   }
 }
