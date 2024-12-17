@@ -13,9 +13,9 @@ import { HeaderComponent } from '../../header/header.component';
   styleUrl: './add.component.css',
 })
 export class AddComponent implements OnInit {
-  current: string = '';
+  current: any[] = [];
   constructor(private actiRoute: ActivatedRoute) {}
   ngOnInit() {
-    this.current = this.actiRoute.snapshot.url[0].path;
+    this.current = [this.actiRoute.snapshot.url[0].path, ' + '];
   }
 }

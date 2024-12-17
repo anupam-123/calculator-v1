@@ -15,31 +15,59 @@
             <span> = </span>
           </div>
         </label>
-        <input
-          type="number"
-          [id]="letter"
-          [formControlName]="letter"
-          class="form-control m-2"
-          [title]="letter"
-          placeholder="Enter value for {{ letter }}"
-        />
+        <div>
+          <input
+            type="number"
+            [id]="letter"
+            [formControlName]="letter"
+            class="form-control m-2"
+            [title]="letter"
+            placeholder="Enter value for {{ letter }}"
+            type="number"
+          />
+        </div>
+        <div
+          class="d-flex jusinpy-content-center align-items-center gap-2 ml-1"
+          *ngIf="getLastAlph === letter"
+        >
+          <button
+            class="btn btn-primary"
+            type="button"
+            (click)="incrementField()"
+          >
+            +
+          </button>
+          <button
+            class="btn btn-danger"
+            type="button"
+            (click)="decrementField()"
+            *ngIf="disableDecrement"
+          >
+            -
+          </button>
+        </div>
       </div>
       <div
-        class="form-group custom-form d-flex justify-content-center align-items-center gap-2"
+        class="form-group custom-form d-flex justify-content-center flex-column align-items-center gap-2"
       >
-        <label for="result">Result: </label>
-        <input
-          type="text"
-          id="result"
-          formControlName="result"
-          class="form-control"
-          readonly
-        />
+        <h4 for="result">
+          {{ onlyAlphabets }} =
+          {{ result.split(",")[0] }}
+        </h4>
       </div>
-      <button type="submit" class="btn btn-primary">Calculate</button>
-      <div>
-        <button class="btn btn-primary" type="button" (click)="goBack('')">Back</button>
+      <div class="d-flex justify-content-between">
+        <button type="submit" class="btn btn-primary" [disabled]="!myForm.valid">
+          Calculate
+        </button>
+        <button type="button" class="btn btn-secondary" (click)="resetForm()">
+          Reset
+        </button>
       </div>
     </form>
+  </div>
+  <div class="bottom-right">
+    <button class="btn btn-primary" type="button" (click)="goBack('')">
+      <i class="bi bi-house"></i>
+    </button>
   </div>
 </div>

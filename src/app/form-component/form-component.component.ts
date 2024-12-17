@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -20,14 +20,45 @@ import { Router } from '@angular/router';
 export class FormComponentComponent implements OnInit {
   myForm!: FormGroup;
   uppercaseAlphabet: string[] = [];
+  onlyAlphabets: string = '';
+  result: string = '';
+  @Input() numberOfText = 2;
+  @Input() operation: any[] = [];
+  getLastAlph = '';
+  disableDecrement: boolean = false;
 
-  @Input() numberOfText = 3;
-  @Input() operation: string = '';
-
-  constructor(private logs: Logger, private route: Router) {}
+  constructor(
+    private logs: Logger,
+    private route: Router,
+    private cdRef: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     this.createForm();
+  }
+
+  incrementField() {
+    this.numberOfText += 1;
+    const newLetter = String.fromCharCode(65 + this.numberOfText - 1);
+    this.uppercaseAlphabet.push(newLetter);
+    this.myForm.addControl(newLetter, new FormControl('', Validators.required));
+    this.getLastAlph = newLetter;
+    this.onlyAlphabets = this.uppercaseAlphabet.join(this.operation[1]);
+    this.cdRef.detectChanges();
+  }
+
+  decrementField() {
+    if (this.numberOfText > 1) {
+      const lastLetter = this.uppercaseAlphabet.pop();
+      if (lastLetter) {
+        this.myForm.removeControl(lastLetter);
+        this.numberOfText -= 1;
+        this.getLastAlph =
+          this.uppercaseAlphabet[this.uppercaseAlphabet.length - 1];
+        this.onlyAlphabets = this.uppercaseAlphabet.join(this.operation[1]);
+        this.cdRef.detectChanges();
+      }
+    }
   }
 
   createForm() {
@@ -35,10 +66,12 @@ export class FormComponentComponent implements OnInit {
     this.uppercaseAlphabet = Array.from({ length: this.numberOfText }, (_, i) =>
       String.fromCharCode(65 + i)
     );
-
+    this.onlyAlphabets = this.uppercaseAlphabet.join(this.operation[1]);
     this.uppercaseAlphabet.forEach((letter) => {
-      formControls[letter] = new FormControl(0, [Validators.required]);
+      formControls[letter] = new FormControl('', [Validators.required]);
     });
+    this.getLastAlph =
+      this.uppercaseAlphabet[this.uppercaseAlphabet.length - 1];
     formControls['result'] = new FormControl(0);
     this.myForm = new FormGroup(formControls);
   }
@@ -51,28 +84,32 @@ export class FormComponentComponent implements OnInit {
     const values = this.uppercaseAlphabet.map(
       (letter) => this.myForm.get(letter)?.value || 0
     );
+    let result: any[] = [];
 
-    let result = 0;
-    switch (this.operation) {
+    if (this.myForm.invalid) {
+      alert('Enter all the field');
+      return;
+    }
+    switch (this.operation[0]) {
       case 'add':
-        result = values.reduce((sum, val) => sum + val, 0);
+        result = [values.reduce((sum, val) => sum + val, 0)];
         this.logs.log(`Addition performed: ${result}`);
         break;
       case 'sub':
-        result = values.reduce((diff, val) => diff - val);
+        result = [values.reduce((diff, val) => diff - val)];
         this.logs.log(`Subtraction performed: ${result}`);
         break;
       case 'multiply':
-        result = values.reduce((prod, val) => prod * val, 1);
+        result = [values.reduce((prod, val) => prod * val, 1)];
         this.logs.log(`Multiplication performed: ${result}`);
         break;
       case 'division':
         if (values.slice(1).some((val) => val === 0)) {
           this.logs.error('Division by zero is not allowed');
           alert('Divisor is zero');
-          result = 0;
+          result = [];
         } else {
-          result = values.reduce((quot, val) => quot / val);
+          result = [values.reduce((quot, val) => quot / val).toFixed(2)];
           this.logs.log(`Division performed: ${result}`);
         }
         break;
@@ -80,6 +117,12 @@ export class FormComponentComponent implements OnInit {
         this.logs.log('Invalid operation');
         break;
     }
-    this.myForm.get('result')?.setValue(result);
+    this.result = result.join(', ');
+  }
+
+  resetForm() {
+    this.myForm.reset();
+    this.result = '';
+    this.createForm();
   }
 }

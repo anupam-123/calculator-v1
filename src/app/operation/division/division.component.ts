@@ -12,9 +12,9 @@ import { ActivatedRoute } from '@angular/router';
   styleUrl: './division.component.css',
 })
 export class DivisionComponent implements OnInit {
-  current: string = '';
+  current: any[] = [];
   constructor(private actiRoute: ActivatedRoute) {}
   ngOnInit() {
-    this.current = this.actiRoute.snapshot.url[0].path;
+    this.current = [this.actiRoute.snapshot.url[0].path, ' / '];
   }
 }

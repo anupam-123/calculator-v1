@@ -11,9 +11,9 @@ import { HeaderComponent } from '../../header/header.component';
   styleUrl: './multiply.component.css',
 })
 export class MultiplyComponent implements OnInit {
-  current: string = '';
+  current: any[] = [];
   constructor(private actiRoute: ActivatedRoute) {}
   ngOnInit() {
-    this.current = this.actiRoute.snapshot.url[0].path;
+    this.current = [this.actiRoute.snapshot.url[0].path, ' * '];
   }
 }
